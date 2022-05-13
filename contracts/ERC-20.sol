@@ -2,8 +2,9 @@
 pragma solidity ^0.8.0;
 
 import "hardhat/console.sol";
+import "./ERCinterface.sol";
 
-contract Greeter {
+contract ERC20 is ERCInterface {
     string private greeting;
 
     constructor() {

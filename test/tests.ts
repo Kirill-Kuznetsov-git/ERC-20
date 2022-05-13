@@ -1,20 +1,18 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
-import { Greeter__factory } from "../typechain";
 
-describe("Greeter", function () {
-  it("Should return the new greeting once it's changed", async function () {
-    const signers = await ethers.getSigners();
-    const contract = await new Greeter__factory(signers[0]).deploy();
-    await contract.deployed();
+describe("ERC-20", function () {
+  let owner
+  let firstCandidate
+  let secondCandidate
+  let firstParticipant
+  let secondParticipant
 
-    expect(await contract.greet()).to.equal("Hello, world!");
+  beforeEach(async function () {
+    [owner, firstParticipant, secondParticipant, firstCandidate, secondCandidate] = await ethers.getSigners()
 
-    const setGreetingTx = await contract.setGreeting("Hola, mundo!");
-
-    // wait until the transaction is mined
-    await setGreetingTx.wait();
-
-    expect(await contract.greet()).to.equal("Hola, mundo!");
-  });
+    const ERCEngine = await ethers.getContractFactory("ERC-20", owner)
+    const ERCContract = await ERCEngine.deploy()
+    await ERCContract.deployed()
+  })
 });
