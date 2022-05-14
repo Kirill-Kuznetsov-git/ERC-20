@@ -9,7 +9,6 @@ task("approve", "Approve tokens to spender")
         const spender = taskArgs.spender;
         const value = taskArgs.value;
         const ERCTokenContract = await get_contract(hre)
-        await ERCTokenContract.approve(spender, value)
         ERCTokenContract.on("Approval(address,address,uint256)", (owner, spender, value) => {
             console.log(`
             Transfer:
@@ -18,5 +17,6 @@ task("approve", "Approve tokens to spender")
             value: ${value}
             `)
         })
+        await ERCTokenContract.approve(spender, value)
     })
 
