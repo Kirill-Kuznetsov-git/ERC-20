@@ -7,13 +7,17 @@ import "@typechain/hardhat";
 import "hardhat-gas-reporter";
 import "solidity-coverage";
 
-import "./tasks/getTasks";
 import "./tasks/approve";
 import "./tasks/allowance";
 import "./tasks/burn";
 import "./tasks/mint";
 import "./tasks/transferFrom";
 import "./tasks/transfer";
+import "./tasks/balance";
+import "./tasks/decimals";
+import "./tasks/name";
+import "./tasks/symbol";
+import "./tasks/totalSupply";
 
 dotenv.config();
 
