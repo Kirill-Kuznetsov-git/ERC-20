@@ -10,7 +10,6 @@ task("transfer", "Transfer tokens to spender")
         const spender = taskArgs.spender;
         const value = taskArgs.value;
         const ERCTokenContract = await get_contract(hre)
-        console.log(ERCTokenContract.listeners("Transfer(address,address,uint256)"))
         ERCTokenContract.once("Transfer(address,address,uint256)", (from, to, value) => {
             console.log(`
             Transfer:
