@@ -1,8 +1,12 @@
 import "@nomiclabs/hardhat-waffle";
 import {HardhatRuntimeEnvironment} from "hardhat/types";
 
-const CONTRACT_ADDRESS_ROPSTEN = `${process.env.CONTACT_ADDRESS_ROPSTEN}`;
-const CONTRACT_ADDRESS_LOCALHOST = `${process.env.CONTRACT_ADDRESS_LOCALHOST}`;
+let CONTRACT_ADDRESS: string
+if (`${process.env.NETWORK}` == 'localhost'){
+    CONTRACT_ADDRESS = `${process.env.CONTRACT_ADDRESS_LOCALHOST}`;
+} else {
+    CONTRACT_ADDRESS = `${process.env.CONTACT_ADDRESS_ROPSTEN}`;
+}
 
 
 export async function get_contract(hre: HardhatRuntimeEnvironment) {
@@ -10,7 +14,7 @@ export async function get_contract(hre: HardhatRuntimeEnvironment) {
     const signer = accounts[0];
     const ERCFactory = await hre.ethers.getContractFactory("ERC20", signer);
     return new hre.ethers.Contract(
-        CONTRACT_ADDRESS_ROPSTEN,
+        CONTRACT_ADDRESS,
         ERCFactory.interface,
         signer
     )
