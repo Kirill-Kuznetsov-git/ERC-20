@@ -7,7 +7,7 @@ export async function get_contract(hre: HardhatRuntimeEnvironment) {
     if (`${process.env.NETWORK}` == 'LOCALHOST'){
         CONTRACT_ADDRESS = `${process.env.CONTRACT_ADDRESS_LOCALHOST}`;
     } else {
-        CONTRACT_ADDRESS = `${process.env.CONTRACT_ADDRESS_ROPSTEN}`;
+        CONTRACT_ADDRESS = `${process.env.CONTRACT_ADDRESS_GOERLI}`;
     }
     const accounts = await hre.ethers.getSigners();
     const signer = accounts[0];

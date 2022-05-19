@@ -56,7 +56,7 @@ contract ERC20 is ERCInterface {
         return true;
     }
 
-    function transferFrom(address from, address to, uint256 value) override public enoughTokens(msg.sender, value)  returns(bool){
+    function transferFrom(address from, address to, uint256 value) override public enoughTokens(from, value)  returns(bool){
         _balances[from] -= value;
         _balances[to] += value;
         emit Transfer(from, to, value);
