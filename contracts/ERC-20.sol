@@ -6,6 +6,7 @@ import "./ERCinterface.sol";
 contract ERC20 is ERCInterface {
     address owner;
     mapping(address => uint256) private _balances;
+    mapping(address => bool) private isAdmin;
     mapping(address => mapping(address => uint256)) private _allowances;
     uint8 constant private DECIMALS = 18; // 1 token = 1 wei
     string private _name;
@@ -22,11 +23,21 @@ contract ERC20 is ERCInterface {
         _;
     }
 
+    modifier onlyAdmin() {
+        require(isAdmin[msg.sender], 'not an admin');
+        _;
+    }
+
     constructor(string memory name_, string memory symbol_, uint256 initialSupply, address account){
         _name = name_;
         _symbol = symbol_;
         owner = msg.sender;
+        isAdmin[msg.sender] = true;
         mint(account, initialSupply);
+    }
+
+    function giveAdminRole(address newAdmin) override external onlyOwner{
+        isAdmin[newAdmin] = true;
     }
 
     function name() override public view returns(string memory){
@@ -69,12 +80,12 @@ contract ERC20 is ERCInterface {
         return true;
     }
 
-    function burn(address account, uint256 amount) override public onlyOwner{
+    function burn(address account, uint256 amount) override public onlyAdmin{
         _balances[account] -= amount;
         _totalTokens -= amount;
     }
 
-    function mint(address account, uint256 amount) override public onlyOwner{
+    function mint(address account, uint256 amount) override public onlyAdmin{
         _balances[account] += amount;
         _totalTokens += amount;
     }
